@@ -15,3 +15,10 @@ export const loadGameDetail = async (slug: string) =>
   await (
     await api.get<Api.GameDetail>(`games/${slug}`)
   ).data;
+
+export const loadGameScreenshots = async (slug: string) =>
+  (
+    await api.get<Api.Response<Api.GameScreenshot[]>>(
+      `games/${slug}/screenshots`
+    )
+  ).data.results;
