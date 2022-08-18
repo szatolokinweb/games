@@ -7,3 +7,6 @@ const api = axios.create({
     key: constants.API_KEY,
   },
 });
+
+export const loadGames = async () =>
+  (await api.get<Api.Response<Api.Game[]>>("games")).data.results;
