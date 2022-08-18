@@ -10,8 +10,8 @@ export const getServerSideProps: GetServerSideProps = async () => ({
 
 const Home: NextPage<{ games: Api.Game[] }> = ({ games }) => (
   <ul>
-    {games.map(({ id, slug, name }) => (
-      <li key={id}>
+    {games.map(({ slug, name }) => (
+      <li key={slug}>
         <Link href={`/game/${slug}`}>
           <a>{name}</a>
         </Link>
