@@ -1,11 +1,15 @@
 namespace Api {
   interface Game {
-    id: number;
     slug: string;
     name: string;
     released: string;
     background_image: string;
     rating: number;
+  }
+
+  interface GameDetail extends Game {
+    description: string;
+    website: string;
   }
 
   interface Response<ResultType> {
