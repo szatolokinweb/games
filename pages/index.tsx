@@ -2,11 +2,17 @@ import { NextPage, GetServerSideProps } from "next";
 import { loadGames } from "../api";
 import Link from "next/link";
 
-export const getServerSideProps: GetServerSideProps = async () => ({
-  props: {
-    games: await loadGames(),
-  },
-});
+let count = 1;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  console.log(`**getServerSideProps ${count++}**`);
+
+  return {
+    props: {
+      games: await loadGames(),
+    },
+  };
+};
 
 const Home: NextPage<{ games: Api.Game[] }> = ({ games }) => (
   <ul>
