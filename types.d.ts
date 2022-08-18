@@ -12,6 +12,11 @@ namespace Api {
     website: string;
   }
 
+  interface GameScreenshot {
+    id: number;
+    image: string;
+  }
+
   interface Response<ResultType> {
     results: ResultType;
   }
