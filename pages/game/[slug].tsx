@@ -2,6 +2,7 @@ import { NextPage, GetServerSideProps } from "next";
 import { loadGameDetail, loadGameScreenshots } from "../../api";
 import { Wrapper } from "../../components/Wrapper";
 import { Slider } from "../../components/Slider";
+import Head from "next/head";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params as { slug: string };
@@ -22,6 +23,9 @@ const Game: NextPage<{
 
   return (
     <Wrapper>
+      <Head>
+        <title>{name}</title>
+      </Head>
       <h1>{name}</h1>
       <div>Release date: {released}</div>
       <div>Rating: {rating}</div>
