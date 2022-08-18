@@ -13,4 +13,8 @@ export const GlobalStyle = createGlobalStyle`
     background-color: whitesmoke;
     font-family: sans-serif;
   }
+
+  ul {
+    list-style: none;
+  }
 `;
