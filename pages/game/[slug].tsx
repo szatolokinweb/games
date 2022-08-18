@@ -1,6 +1,7 @@
 import { NextPage, GetServerSideProps } from "next";
-import { loadGameDetail } from "../../api";
+import { loadGameDetail, loadGameScreenshots } from "../../api";
 import { Wrapper } from "../../components/Wrapper";
+import { Slider } from "../../components/Slider";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params as { slug: string };
@@ -8,11 +9,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
       gameDetail: await loadGameDetail(slug),
+      gameScreenshots: await loadGameScreenshots(slug),
     },
   };
 };
 
-const Game: NextPage<{ gameDetail: Api.GameDetail }> = ({ gameDetail }) => {
+const Game: NextPage<{
+  gameDetail: Api.GameDetail;
+  gameScreenshots: Api.GameScreenshot[];
+}> = ({ gameDetail, gameScreenshots }) => {
   const { name, released, rating, description, website } = gameDetail;
 
   return (
@@ -20,6 +25,7 @@ const Game: NextPage<{ gameDetail: Api.GameDetail }> = ({ gameDetail }) => {
       <h1>{name}</h1>
       <div>Release date: {released}</div>
       <div>Rating: {rating}</div>
+      <Slider screenshots={gameScreenshots} />
       <div
         dangerouslySetInnerHTML={{
           __html: description,
