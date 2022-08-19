@@ -2,6 +2,7 @@ import debounce from "lodash/debounce";
 import { GetStaticProps, NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { loadGames, loadParentPlatforms } from "../api";
+import Head from "next/head";
 
 import { List } from "../components/List";
 import { Loader } from "../components/Loader";
@@ -65,6 +66,9 @@ const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
 
   return (
     <>
+      <Head>
+        <title>Games</title>
+      </Head>
       <Search search={search} onChange={setSearch} />
       <Select
         items={parentPlatforms}

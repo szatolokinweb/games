@@ -6,12 +6,12 @@ import { FC } from "react";
 import { Pagination } from "swiper";
 
 const StyledSwiper = styled(Swiper)`
-  padding: 10px;
+  margin: 20px 0;
+  padding: 20px;
   padding-bottom: 40px;
-  height: 300px;
-  background-color: #555555;
-  border: 1px solid black;
-  border-radius: 10px;
+  height: 500px;
+  background-color: #141414;
+  border-radius: 20px;
 
   .swiper-slide {
     display: flex;
@@ -21,7 +21,7 @@ const StyledSwiper = styled(Swiper)`
   img {
     max-width: 100%;
     max-height: 100%;
-    border-radius: 10px;
+    border-radius: 20px;
   }
 `;
 

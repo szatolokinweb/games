@@ -1,8 +1,11 @@
 import { NextPage, GetServerSideProps } from "next";
 import { loadGameDetail, loadGameScreenshots } from "../../api";
-import { Wrapper } from "../../components/Wrapper";
-import { Slider } from "../../components/Slider";
 import Head from "next/head";
+import Image from "next/image";
+import styled from "styled-components";
+
+import { Slider } from "../../components/Slider";
+import { Stars } from "../../components/Stars";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params as { slug: string };
@@ -24,11 +27,60 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 };
 
+const Value = styled.span`
+  font-weight: bold;
+`;
+
+const Frame = styled.div`
+  position: relative;
+  z-index: 0;
+
+  margin: 20px 0;
+  height: 300px;
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  img {
+    object-fit: cover;
+    object-position: top;
+  }
+`;
+
+const GoLink = styled.a`
+  margin-top: 20px;
+  height: 40px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid black;
+  border-radius: 10px;
+  transition: 250ms;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #3eff8b;
+    border-color: #3eff8b;
+    color: white;
+  }
+`;
+
+const Article = styled.div`
+  font-size: 18px;
+`;
+
+const Info = styled.div`
+  font-size: 18px;
+`;
+
 const Game: NextPage<{
   gameDetail: Api.GameDetail;
   gameScreenshots: Api.GameScreenshot[];
 }> = ({ gameDetail, gameScreenshots }) => {
-  const { name, released, rating, description, website } = gameDetail;
+  const { name, released, rating, description, website, background_image } =
+    gameDetail;
 
   return (
     <>
@@ -36,17 +88,27 @@ const Game: NextPage<{
         <title>{name}</title>
       </Head>
       <h1>{name}</h1>
-      <div>Release date: {released}</div>
-      <div>Rating: {rating}</div>
+      {background_image && (
+        <Frame>
+          <Image src={background_image} layout="fill" priority />
+        </Frame>
+      )}
+      <Info>
+        Released: <Value>{released}</Value>
+      </Info>
+      <Info>
+        Rating: <Value>{rating}</Value>
+      </Info>
+      <Stars rating={rating} />
       <Slider screenshots={gameScreenshots} />
-      <div
+      <Article
         dangerouslySetInnerHTML={{
           __html: description,
         }}
       />
-      <a href={website} target="_blank" rel="noopener noreferrer">
+      <GoLink href={website} target="_blank" rel="noopener noreferrer">
         Перейти на сайт
-      </a>
+      </GoLink>
     </>
   );
 };

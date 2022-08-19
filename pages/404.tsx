@@ -1,14 +1,3 @@
-import Link from "next/link";
-
-import { Wrapper } from "../components/Wrapper";
-
-const Custom404 = () => (
-  <Wrapper>
-    <h1>Страница не найдена</h1>
-    <Link href="/">
-      <a>Главная</a>
-    </Link>
-  </Wrapper>
-);
+const Custom404 = () => <h1>Not found</h1>;
 
 export default Custom404;
