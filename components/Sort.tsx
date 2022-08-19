@@ -10,28 +10,38 @@ const Item = styled.div<{ active: boolean }>`
   z-index: 0;
 
   margin-right: 20px;
-  padding: 5px;
+  padding: 0 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
   padding-right: 20px;
   user-select: none;
 
-  border: 1px solid ${({ active }) => (active && "red") || "black"};
+  border: 3px solid ${({ active }) => (active && "#3eff8b") || "black"};
   border-radius: 5px;
-  color: ${({ active }) => (active && "red") || "black"};
+  color: ${({ active }) => (active && "#3eff8b") || "black"};
+  font-weight: ${({ active }) => (active && "bold") || "normal"};
   cursor: pointer;
+  transition: 250ms;
+
+  &:hover {
+    border-color: #3eff8b;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const items: Sort.Value[] = [
   {
     value: null,
-    name: "По-умолчанию",
+    name: "Default",
   },
   {
     value: "-rating",
-    name: "Рейтинг",
+    name: "Rating",
   },
   {
     value: "-released",
-    name: "Дата релиза",
+    name: "Released",
   },
 ];
 
@@ -69,8 +79,7 @@ export const Sort: FC<{ value: string | null; onChange: Function }> = ({
             setActive(index);
           }}
         >
-          {item.name}
-          {index === active && <Dir>{getDir(value)}</Dir>}
+          {item.name} {index === active && getDir(value)}
         </Item>
       ))}
     </Row>

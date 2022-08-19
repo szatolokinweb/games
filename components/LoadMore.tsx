@@ -1,12 +1,29 @@
 import debounce from "lodash/debounce";
 import { FC, useCallback, useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Button = styled.button`
-  margin: 40px auto;
-  padding: 0 10px;
+const buttonHover = css`
+  background-color: #3eff8b;
+  color: white;
+`;
+
+const Button = styled.button<{ active: boolean }>`
+  margin: 50px auto 30px;
+  padding: 0 20px;
   height: 40px;
   display: block;
+
+  border: 3px solid #3eff8b;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 250ms;
+
+  &:hover {
+    ${buttonHover}
+  }
+
+  ${(props) => props.active && buttonHover}
 `;
 
 export const LoadMore: FC<{ onChange: Function; isLoading: boolean }> = ({
@@ -17,13 +34,11 @@ export const LoadMore: FC<{ onChange: Function; isLoading: boolean }> = ({
 
   const handleScroll = useCallback(
     debounce(() => {
-      console.log("handleScroll", isLoading);
+      if (!isLoading) {
+        const windowHeight = window.innerHeight;
+        const buttonTop = buttonRef.current.getBoundingClientRect().top;
 
-      if (
-        window.innerHeight - buttonRef.current.getBoundingClientRect().top >
-        0
-      ) {
-        if (!isLoading) {
+        if (windowHeight - buttonTop > 0) {
           onChange();
         }
       }
@@ -38,7 +53,12 @@ export const LoadMore: FC<{ onChange: Function; isLoading: boolean }> = ({
   }, []);
 
   return (
-    <Button ref={buttonRef} onClick={() => onChange()} disabled={isLoading}>
+    <Button
+      ref={buttonRef}
+      onClick={() => onChange()}
+      disabled={isLoading}
+      active={isLoading}
+    >
       {isLoading ? "..." : "Загрузить еще"}
     </Button>
   );

@@ -20,11 +20,18 @@ export const GlobalStyle = createGlobalStyle`
 
   input {
     font: inherit;
+    outline: none;
   }
   
   a {
     font: inherit;
     color: inherit;
     text-decoration: none;
+  }
+
+  button {
+    background: none;
+    border: none;
+    font: inherit;
   }
 `;

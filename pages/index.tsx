@@ -70,10 +70,10 @@ const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
       <Sort value={ordering} onChange={setOrdering} />
       <List games={games} />
       <LoadMore
-        onChange={() => setPage((page) => page + 1)}
+        onChange={() => setPage((prevPage) => prevPage + 1)}
         isLoading={isLoading}
       />
-      <Loader active={isLoading} />
+      <Loader isLoading={isLoading} />
     </>
   );
 };
