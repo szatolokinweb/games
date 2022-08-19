@@ -59,6 +59,10 @@ const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
     });
   }, [search, parentPlatform, ordering, page]);
 
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
+
   return (
     <Wrapper>
       <Search search={search} onChange={setSearch} />
@@ -73,7 +77,7 @@ const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
         onChange={() => setPage((page) => page + 1)}
         isLoading={isLoading}
       />
-      {isLoading && <Loader />}
+      <Loader active={isLoading} />
     </Wrapper>
   );
 };
