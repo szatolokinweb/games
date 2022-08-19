@@ -8,8 +8,17 @@ const api = axios.create({
   },
 });
 
-export const loadGames = async () =>
-  (await api.get<Api.Response<Api.Game[]>>("games")).data.results;
+export const loadGames = async ({ query, page }: Api.LoadGamesOptions) => {
+  const response = await api.get("games", {
+    params: {
+      ...query,
+      ...(page && { page }),
+      page_size: constants.PAGE_SIZE,
+    },
+  });
+
+  return response.data.results;
+};
 
 export const loadGameDetail = async (slug: string) =>
   await (
@@ -22,3 +31,11 @@ export const loadGameScreenshots = async (slug: string) =>
       `games/${slug}/screenshots`
     )
   ).data.results;
+
+export const loadParentPlatforms = async () => {
+  const response = await api.get<Api.Response<Api.ParentPlatform[]>>(
+    "platforms/lists/parents"
+  );
+
+  return response.data.results;
+};

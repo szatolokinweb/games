@@ -17,4 +17,8 @@ export const GlobalStyle = createGlobalStyle`
   ul {
     list-style: none;
   }
+
+  input {
+    font: inherit;
+  }
 `;

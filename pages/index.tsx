@@ -1,56 +1,38 @@
-import { NextPage, GetServerSideProps } from "next";
-import { loadGames } from "../api";
+import { NextPage, GetServerSideProps, GetStaticProps } from "next";
+import { loadGames, loadParentPlatforms } from "../api";
 import Link from "next/link";
 import { Wrapper } from "../components/Wrapper";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import queryString from "query-string";
+import debounce from "lodash/debounce";
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  return {
-    props: {
-      games: await loadGames(),
-      initialSearch: query?.searchp || "",
-    },
-  };
-};
+import { Select } from "../components/Select";
+import { Search } from "../components/Search";
+import { Sort } from "../components/Sort";
 
-const Home: NextPage<{
-  games: Api.Game[];
-  initialSearch: string;
-}> = ({ games, initialSearch }) => {
-  const router = useRouter();
+export const getStaticProps: GetStaticProps = async () => ({
+  props: {
+    parentPlatforms: await loadParentPlatforms(),
+  },
+});
 
-  const [search, setSearch] = useState<string>(initialSearch);
-
-  useEffect(() => {
-    const routerQuery = { ...router.query };
-
-    if (search.trim()) {
-      routerQuery.search = search;
-    } else {
-      delete routerQuery.search;
-    }
-
-    router.push({
-      query: routerQuery,
-    });
-  }, [search]);
+const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
+  parentPlatforms,
+}) => {
+  const [search, setSearch] = useState("");
+  const [parentPlatform, setParentPlatform] = useState(null);
+  const [ordering, setOrdering] = useState(null);
 
   return (
     <Wrapper>
-      <input
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
+      <Search value={search} onChange={setSearch} />
+      <Select
+        items={parentPlatforms}
+        value={parentPlatform}
+        onChange={setParentPlatform}
       />
-      <ul>
-        {games.map(({ slug, name }) => (
-          <li key={slug}>
-            <Link href={`/game/${slug}`}>
-              <a>{name}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Sort value={ordering} onChange={setOrdering} />
     </Wrapper>
   );
 };
