@@ -1,17 +1,15 @@
-import { NextPage, GetServerSideProps, GetStaticProps } from "next";
-import { loadGames, loadParentPlatforms } from "../api";
-import Link from "next/link";
-import { Wrapper } from "../components/Wrapper";
-import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/router";
-import queryString from "query-string";
 import debounce from "lodash/debounce";
+import { GetStaticProps, NextPage } from "next";
+import { useCallback, useEffect, useState } from "react";
+import { loadGames, loadParentPlatforms } from "../api";
 
-import { Select } from "../components/Select";
-import { Search } from "../components/Search";
-import { Sort } from "../components/Sort";
 import { List } from "../components/List";
 import { Loader } from "../components/Loader";
+import { Search } from "../components/Search";
+import { Select } from "../components/Select";
+import { Sort } from "../components/Sort";
+import { Wrapper } from "../components/Wrapper";
+import { LoadMore } from "../components/LoadMore";
 
 export const getStaticProps: GetStaticProps = async () => ({
   props: {
@@ -70,7 +68,12 @@ const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
         onChange={setParentPlatform}
       />
       <Sort value={ordering} onChange={setOrdering} />
-      {(isLoading && <Loader />) || <List games={games} />}
+      <List games={games} />
+      <LoadMore
+        onChange={() => setPage((page) => page + 1)}
+        isLoading={isLoading}
+      />
+      {isLoading && <Loader />}
     </Wrapper>
   );
 };
