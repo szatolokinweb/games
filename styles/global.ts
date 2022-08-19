@@ -21,4 +21,10 @@ export const GlobalStyle = createGlobalStyle`
   input {
     font: inherit;
   }
+  
+  a {
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+  }
 `;

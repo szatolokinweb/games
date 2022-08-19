@@ -8,14 +8,13 @@ const api = axios.create({
   },
 });
 
-export const loadGames = async ({ query, page }: Api.LoadGamesOptions) => {
-  const response = await api.get("games", {
-    params: {
-      ...query,
-      ...(page && { page }),
-      page_size: constants.PAGE_SIZE,
-    },
-  });
+export const loadGames = async ({
+  search,
+  parentPlatform,
+  ordering,
+  page,
+}: Api.LoadGamesOptions) => {
+  const response = await api.get<Api.Response<Api.Game[]>>("games");
 
   return response.data.results;
 };

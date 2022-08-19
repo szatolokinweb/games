@@ -22,8 +22,10 @@ namespace Api {
   }
 
   interface LoadGamesOptions {
-    query: ParsedUrlQuery;
-    page?: number;
+    search: string;
+    parentPlatform: number | null;
+    ordering: string | null;
+    page: number;
   }
 
   interface ParentPlatform {

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -33,18 +33,24 @@ const Clear = styled.div<{ show: boolean }>`
   transition: 0.5s;
 `;
 
-export const Search: FC<{ value: string; onChange: Function }> = ({
-  value,
+export const Search: FC<{ search: string; onChange: Function }> = ({
+  search,
   onChange,
 }) => {
+  const [value, setValue] = useState(search);
+
+  useEffect(() => {
+    onChange(value.trim());
+  }, [value]);
+
   return (
     <Wrapper>
       <Input
         value={value}
-        onChange={({ target }) => onChange(target.value)}
+        onChange={({ target }) => setValue(target.value)}
         placeholder="Название игры"
       />
-      <Clear show={!!value.trim()} onClick={() => onChange("")}>
+      <Clear show={!!value.trim()} onClick={() => setValue("")}>
         Очистить
       </Clear>
     </Wrapper>

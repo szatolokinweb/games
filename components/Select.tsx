@@ -8,7 +8,7 @@ const Item = styled.li<Select.ItemProps>`
 
 const Panel = styled.div<{ active: boolean }>`
   position: relative;
-  z-index: 0;
+  z-index: 1;
 
   padding: 0 10px;
   width: 200px;
@@ -32,6 +32,7 @@ const List = styled.ul<Select.ListProps>`
   overflow-y: auto;
   pointer-events: ${({ show }) => (show && "all") || "none"};
 
+  background-color: white;
   border: 1px solid black;
   border-radius: 10px;
   opacity: ${({ show }) => (show && 1) || 0};
@@ -58,7 +59,9 @@ export const Select: FC<{
 
   useEffect(() => {
     window.addEventListener("click", (event) => {
-      const isSelect = event.target.closest("[data-select-panel]");
+      const isSelect = (event?.target as HTMLElement).closest(
+        "[data-select-panel]"
+      );
 
       if (!isSelect) {
         setIsOpen(false);
