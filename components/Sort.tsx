@@ -3,6 +3,12 @@ import styled, { css } from "styled-components";
 
 const Row = styled.div`
   display: flex;
+
+  @media (max-width: 414px) {
+    margin-right: -10px;
+    margin-top: -10px;
+    flex-wrap: wrap;
+  }
 `;
 
 const Item = styled.div<{ active: boolean }>`
@@ -36,6 +42,11 @@ const Item = styled.div<{ active: boolean }>`
     border-color: #3eff8b;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
   }
+
+  @media (max-width: 414px) {
+    margin-right: 10px;
+    margin-top: 10px;
+  }
 `;
 
 const items: Sort.Value[] = [
@@ -52,13 +63,6 @@ const items: Sort.Value[] = [
     name: "Released",
   },
 ];
-
-const Dir = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 5px;
-  transform: translateY(-50%);
-`;
 
 const toggleValue = (value: string | null) =>
   value ? (value[0] === "-" && value.slice(1)) || `-${value}` : null;

@@ -41,6 +41,7 @@ const Preview = styled.a`
 
   img {
     object-fit: cover;
+    object-position: top;
   }
 `;
 
@@ -49,6 +50,14 @@ const Grid = styled.ul`
   grid-template-columns: repeat(3, 1fr);
   column-gap: 10px;
   row-gap: 10px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const Frame = styled.div`
@@ -59,6 +68,18 @@ const Frame = styled.div`
   overflow: hidden;
 
   border-radius: 10px;
+
+  @media (max-width: 1024px) {
+    height: 250px;
+  }
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+
+  @media (max-width: 414px) {
+    height: 200px;
+  }
 `;
 
 const Title = styled.h3`
