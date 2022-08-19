@@ -2,23 +2,37 @@ import Link from "next/link";
 import Image from "next/image";
 import { FC } from "react";
 import styled from "styled-components";
+import { Stars } from "./Stars";
+
+const Wrapper = styled.div`
+  margin-top: 20px;
+`;
 
 const Preview = styled.a`
   position: relative;
   z-index: 0;
 
-  margin-top: 20px;
   padding: 10px;
+  padding-bottom: 20px;
   min-height: 200px;
   display: block;
 
-  border: 1px solid black;
-  border-radius: 10px;
+  border: 3px solid black;
+  background-color: black;
+  color: white;
+  border-radius: 20px;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 250ms;
 
   &:hover {
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    border-color: #3eff8b;
+    transform: scale(1.05);
+    z-index: 1;
+
+    h3 {
+      color: #3eff8b;
+    }
   }
 
   span {
@@ -37,20 +51,49 @@ const Grid = styled.ul`
   row-gap: 10px;
 `;
 
-export const List: FC<{ games: Api.Game[] }> = ({ games }) =>
-  (games.length && (
-    <Grid>
-      {games.map(({ slug, name, released, rating, background_image }) => (
-        <Link key={slug} href={`game/${slug}`} style={{ marginTop: "10px" }}>
-          <Preview>
-            <h3>{name}</h3>
-            <div>released {released}</div>
-            <div>rating {rating}</div>
-            {background_image && (
-              <Image src={background_image} layout="fill" priority />
-            )}
-          </Preview>
-        </Link>
-      ))}
-    </Grid>
-  )) || <>Не найдено</>;
+const Frame = styled.div`
+  position: relative;
+  z-index: 0;
+
+  height: 200px;
+  overflow: hidden;
+
+  border-radius: 10px;
+`;
+
+const Title = styled.h3`
+  margin: 20px 0 10px;
+  transition: 250ms;
+`;
+
+const Value = styled.span`
+  font-weight: bold;
+`;
+
+export const List: FC<{ games: Api.Game[] }> = ({ games }) => (
+  <Wrapper>
+    {(games.length && (
+      <Grid>
+        {games.map(({ slug, name, released, rating, background_image }) => (
+          <Link key={slug} href={`game/${slug}`}>
+            <Preview>
+              {background_image && (
+                <Frame>
+                  <Image src={background_image} layout="fill" priority />
+                </Frame>
+              )}
+              <Title>{name}</Title>
+              <div>
+                Released: <Value>{released}</Value>
+              </div>
+              <div>
+                Rating: <Value>{rating}</Value>
+              </div>
+              <Stars rating={rating} />
+            </Preview>
+          </Link>
+        ))}
+      </Grid>
+    )) || <h2>No results</h2>}
+  </Wrapper>
+);

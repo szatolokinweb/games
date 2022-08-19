@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Row = styled.div`
   display: flex;
@@ -17,12 +17,20 @@ const Item = styled.div<{ active: boolean }>`
   padding-right: 20px;
   user-select: none;
 
-  border: 3px solid ${({ active }) => (active && "#3eff8b") || "black"};
+  border: 3px solid black;
   border-radius: 5px;
-  color: ${({ active }) => (active && "#3eff8b") || "black"};
-  font-weight: ${({ active }) => (active && "bold") || "normal"};
+  color: black;
   cursor: pointer;
   transition: 250ms;
+
+  ${({ active }) =>
+    active &&
+    css`
+      font-weight: bold;
+      color: white;
+      background-color: #3eff8b;
+      border-color: #3eff8b;
+    `}
 
   &:hover {
     border-color: #3eff8b;

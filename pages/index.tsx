@@ -8,7 +8,6 @@ import { Loader } from "../components/Loader";
 import { Search } from "../components/Search";
 import { Select } from "../components/Select";
 import { Sort } from "../components/Sort";
-import { Wrapper } from "../components/Wrapper";
 import { LoadMore } from "../components/LoadMore";
 
 export const getStaticProps: GetStaticProps = async () => ({
