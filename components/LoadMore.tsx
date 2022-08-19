@@ -30,15 +30,19 @@ export const LoadMore: FC<{ onChange: Function; isLoading: boolean }> = ({
   onChange,
   isLoading,
 }) => {
-  const buttonRef = useRef(null);
+  const buttonRef = useRef<HTMLElement>(null);
 
   const handleScroll = useCallback(
     debounce(() => {
       if (!isLoading) {
         const windowHeight = window.innerHeight;
-        const buttonTop = buttonRef.current.getBoundingClientRect().top;
 
-        if (windowHeight - buttonTop > 0) {
+        let buttonTop;
+        if (buttonRef.current) {
+          buttonTop = buttonRef.current.getBoundingClientRect().top;
+        }
+
+        if (windowHeight - (buttonTop || windowHeight) > 0) {
           onChange();
         }
       }
