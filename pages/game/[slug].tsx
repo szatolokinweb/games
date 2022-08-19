@@ -31,7 +31,7 @@ const Game: NextPage<{
   const { name, released, rating, description, website } = gameDetail;
 
   return (
-    <Wrapper>
+    <>
       <Head>
         <title>{name}</title>
       </Head>
@@ -47,7 +47,7 @@ const Game: NextPage<{
       <a href={website} target="_blank" rel="noopener noreferrer">
         Перейти на сайт
       </a>
-    </Wrapper>
+    </>
   );
 };
 

@@ -14,8 +14,8 @@ const Wrapper = styled.div<{ active: boolean }>`
   align-items: center;
   pointer-events: ${(props) => (props.active && "all") || "none"};
 
-  background-color: rgba(0, 0, 0, 0.25);
-  font-size: 52px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 100px;
   color: white;
   opacity: ${(props) => (props.active && 1) || 0};
   transition: 250ms;
