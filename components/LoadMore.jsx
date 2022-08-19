@@ -1,5 +1,5 @@
 import debounce from "lodash/debounce";
-import { FC, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
 const buttonHover = css`
@@ -7,7 +7,7 @@ const buttonHover = css`
   color: white;
 `;
 
-const Button = styled.button<{ active: boolean }>`
+const Button = styled.button`
   margin: 50px auto 30px;
   padding: 0 20px;
   height: 40px;
@@ -26,11 +26,8 @@ const Button = styled.button<{ active: boolean }>`
   ${(props) => props.active && buttonHover}
 `;
 
-export const LoadMore: FC<{ onChange: Function; isLoading: boolean }> = ({
-  onChange,
-  isLoading,
-}) => {
-  const buttonRef = useRef<HTMLElement>();
+export const LoadMore = ({ onChange, isLoading }) => {
+  const buttonRef = useRef(null);
 
   const handleScroll = useCallback(
     debounce(() => {
