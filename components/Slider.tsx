@@ -25,7 +25,7 @@ const StyledSwiper = styled(Swiper)`
     object-fit: cover;
   }
 
-  @media (min-width: 414px) {
+  @media (max-width: 414px) {
     height: 300px;
   }
 `;
