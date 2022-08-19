@@ -32,9 +32,14 @@ const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
     debounce(async (options: Api.LoadGamesOptions) => {
       console.log("fetchGames", options);
 
+      let fetchedGames: Api.Game[];
+
       setIsLoading(true);
-      const fetchedGames = await loadGames(options);
-      setIsLoading(false);
+      try {
+        fetchedGames = await loadGames(options);
+      } finally {
+        setIsLoading(false);
+      }
 
       if (options.page > 1) {
         setGames((games) => [...games, ...fetchedGames]);
