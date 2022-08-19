@@ -7,12 +7,21 @@ import Head from "next/head";
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params as { slug: string };
 
-  return {
-    props: {
-      gameDetail: await loadGameDetail(slug),
-      gameScreenshots: await loadGameScreenshots(slug),
-    },
-  };
+  try {
+    const gameDetail = await loadGameDetail(slug);
+    const gameScreenshots = await loadGameScreenshots(slug);
+
+    return {
+      props: {
+        gameDetail,
+        gameScreenshots,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 const Game: NextPage<{

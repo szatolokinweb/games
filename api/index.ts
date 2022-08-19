@@ -14,7 +14,23 @@ export const loadGames = async ({
   ordering,
   page,
 }: Api.LoadGamesOptions) => {
-  const response = await api.get<Api.Response<Api.Game[]>>("games");
+  const params: any = {};
+
+  if (search) {
+    params.search = search;
+  }
+  if (parentPlatform) {
+    params.parent_platforms = parentPlatform;
+  }
+  if (ordering) {
+    params.ordering = ordering;
+  }
+  params.page = page;
+  params.page_size = constants.PAGE_SIZE;
+
+  const response = await api.get<Api.Response<Api.Game[]>>("games", {
+    params,
+  });
 
   return response.data.results;
 };

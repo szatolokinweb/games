@@ -17,6 +17,7 @@ const Item = styled.div<{ active: boolean }>`
   border: 1px solid ${({ active }) => (active && "red") || "black"};
   border-radius: 5px;
   color: ${({ active }) => (active && "red") || "black"};
+  cursor: pointer;
 `;
 
 const items: Sort.Value[] = [
@@ -25,11 +26,11 @@ const items: Sort.Value[] = [
     name: "По-умолчанию",
   },
   {
-    value: "rating",
+    value: "-rating",
     name: "Рейтинг",
   },
   {
-    value: "released",
+    value: "-released",
     name: "Дата релиза",
   },
 ];
