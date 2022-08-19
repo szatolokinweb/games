@@ -30,7 +30,7 @@ export const LoadMore: FC<{ onChange: Function; isLoading: boolean }> = ({
   onChange,
   isLoading,
 }) => {
-  const buttonRef = useRef<HTMLElement>(null);
+  const buttonRef = useRef<HTMLElement>();
 
   const handleScroll = useCallback(
     debounce(() => {
