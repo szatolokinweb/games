@@ -1,5 +1,4 @@
 import debounce from "lodash/debounce";
-import { GetStaticProps, NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { loadGames, loadParentPlatforms } from "../api";
 import Head from "next/head";
@@ -11,15 +10,13 @@ import { Select } from "../components/Select";
 import { Sort } from "../components/Sort";
 import { LoadMore } from "../components/LoadMore";
 
-export const getStaticProps: GetStaticProps = async () => ({
+export const getStaticProps = async () => ({
   props: {
     parentPlatforms: await loadParentPlatforms(),
   },
 });
 
-const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
-  parentPlatforms,
-}) => {
+const Home = ({ parentPlatforms }) => {
   const [search, setSearch] = useState("");
   const [parentPlatform, setParentPlatform] = useState(null);
   const [ordering, setOrdering] = useState(null);
@@ -27,13 +24,13 @@ const Home: NextPage<{ parentPlatforms: Api.ParentPlatform[] }> = ({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [games, setGames] = useState<Api.Game[]>([]);
+  const [games, setGames] = useState([]);
 
   const fetchGames = useCallback(
-    debounce(async (options: Api.LoadGamesOptions) => {
+    debounce(async (options) => {
       console.log("fetchGames", options);
 
-      let fetchedGames: Api.Game[];
+      let fetchedGames;
 
       setIsLoading(true);
       try {

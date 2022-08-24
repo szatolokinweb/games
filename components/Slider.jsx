@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/pagination";
-import { FC } from "react";
 import { Pagination } from "swiper";
 
 const StyledSwiper = styled(Swiper)`
@@ -30,9 +29,7 @@ const StyledSwiper = styled(Swiper)`
   }
 `;
 
-export const Slider: FC<{ screenshots: Api.GameScreenshot[] }> = ({
-  screenshots,
-}) => (
+export const Slider = ({ screenshots }) => (
   <StyledSwiper modules={[Pagination]} pagination={{ clickable: true }} loop>
     {screenshots.map(({ id, image }) => (
       <SwiperSlide key={id}>

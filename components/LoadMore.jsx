@@ -23,7 +23,7 @@ const Button = styled.button`
     ${buttonHover}
   }
 
-  ${(props) => props.active && buttonHover}
+  ${({ active }) => active && buttonHover}
 `;
 
 export const LoadMore = ({ onChange, isLoading }) => {
@@ -33,13 +33,9 @@ export const LoadMore = ({ onChange, isLoading }) => {
     debounce(() => {
       if (!isLoading) {
         const windowHeight = window.innerHeight;
+        const buttonTop = buttonRef.current.getBoundingClientRect().top;
 
-        let buttonTop;
-        if (buttonRef.current) {
-          buttonTop = buttonRef.current.getBoundingClientRect().top;
-        }
-
-        if (windowHeight - (buttonTop || windowHeight) > 0) {
+        if (windowHeight - buttonTop > 0) {
           onChange();
         }
       }
@@ -49,18 +45,17 @@ export const LoadMore = ({ onChange, isLoading }) => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <Button
       ref={buttonRef}
-      onClick={() => onChange()}
       disabled={isLoading}
       active={isLoading}
+      onClick={onChange}
     >
-      {isLoading ? "..." : "Загрузить еще"}
+      {isLoading ? "..." : "Load more"}
     </Button>
   );
 };

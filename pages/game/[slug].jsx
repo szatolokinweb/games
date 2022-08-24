@@ -1,4 +1,3 @@
-import { NextPage, GetServerSideProps } from "next";
 import { loadGameDetail, loadGameScreenshots } from "../../api";
 import Head from "next/head";
 import Image from "next/image";
@@ -7,8 +6,8 @@ import styled from "styled-components";
 import { Slider } from "../../components/Slider";
 import { Stars } from "../../components/Stars";
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { slug } = params as { slug: string };
+export const getServerSideProps = async ({ params }) => {
+  const { slug } = params;
 
   try {
     const gameDetail = await loadGameDetail(slug);
@@ -75,10 +74,7 @@ const Info = styled.div`
   font-size: 18px;
 `;
 
-const Game: NextPage<{
-  gameDetail: Api.GameDetail;
-  gameScreenshots: Api.GameScreenshot[];
-}> = ({ gameDetail, gameScreenshots }) => {
+const Game = ({ gameDetail, gameScreenshots }) => {
   const { name, released, rating, description, website, background_image } =
     gameDetail;
 

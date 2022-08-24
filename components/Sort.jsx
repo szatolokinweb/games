@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import styled, { css } from "styled-components";
 
 const Row = styled.div`
@@ -11,7 +11,7 @@ const Row = styled.div`
   }
 `;
 
-const Item = styled.div<{ active: boolean }>`
+const Item = styled.div`
   position: relative;
   z-index: 0;
 
@@ -49,7 +49,7 @@ const Item = styled.div<{ active: boolean }>`
   }
 `;
 
-const items: Sort.Value[] = [
+const items = [
   {
     value: null,
     name: "Default",
@@ -64,24 +64,20 @@ const items: Sort.Value[] = [
   },
 ];
 
-const toggleValue = (value: string | null) =>
+const toggleValue = (value) =>
   value ? (value[0] === "-" && value.slice(1)) || `-${value}` : null;
 
-const getDir = (value: string | null) =>
-  value ? (value[0] === "-" && "<") || ">" : "";
+const getDir = (value) => (value ? (value[0] === "-" && ">") || "<" : "");
 
-export const Sort: FC<{ value: string | null; onChange: Function }> = ({
-  value,
-  onChange,
-}) => {
+export const Sort = ({ value, onChange }) => {
   const [active, setActive] = useState(0);
 
   return (
     <Row>
       {items.map((item, index) => (
         <Item
-          active={index === active}
           key={index}
+          active={index === active}
           onClick={() => {
             if (index === active) {
               onChange(toggleValue(value));

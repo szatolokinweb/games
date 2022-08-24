@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -29,7 +29,7 @@ const Input = styled.input`
   }
 `;
 
-const Clear = styled.div<{ show: boolean }>`
+const Clear = styled.div`
   position: absolute;
   top: 50%;
   right: 7px;
@@ -37,13 +37,13 @@ const Clear = styled.div<{ show: boolean }>`
 
   height: 26px;
   padding: 0 5px;
-  pointer-events: ${({ show }) => (show && "all") || "none"};
+  pointer-events: ${({ show }) => (show ? "all" : "none")};
 
   border: 3px solid black;
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
-  opacity: ${({ show }) => (show && 1) || 0};
+  opacity: ${({ show }) => (show ? 1 : 0)};
   transition: 250ms;
 
   &:hover {
@@ -53,15 +53,10 @@ const Clear = styled.div<{ show: boolean }>`
   }
 `;
 
-export const Search: FC<{ search: string; onChange: Function }> = ({
-  search,
-  onChange,
-}) => {
+export const Search = ({ search, onChange }) => {
   const [value, setValue] = useState(search);
 
-  useEffect(() => {
-    onChange(value.trim());
-  }, [value]);
+  useEffect(() => onChange(value.trim()), [value]);
 
   return (
     <Wrapper>
@@ -70,7 +65,7 @@ export const Search: FC<{ search: string; onChange: Function }> = ({
         onChange={({ target }) => setValue(target.value)}
         placeholder="🔎 Search games"
       />
-      <Clear show={!!search} onClick={() => setValue("")}>
+      <Clear show={search} onClick={() => setValue("")}>
         Clear
       </Clear>
     </Wrapper>

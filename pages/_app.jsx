@@ -1,11 +1,10 @@
-import { AppProps } from "next/app";
 import { GlobalStyle } from "../styles/global";
 import Head from "next/head";
 
 import { Wrapper } from "../components/Wrapper";
 import { Header } from "../components/Header";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>

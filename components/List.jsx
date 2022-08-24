@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FC } from "react";
 import styled from "styled-components";
 import { Stars } from "./Stars";
 
@@ -91,30 +90,32 @@ const Value = styled.span`
   font-weight: bold;
 `;
 
-export const List: FC<{ games: Api.Game[] }> = ({ games }) => (
+const Games = ({ games }) => (
+  <Grid>
+    {games.map(({ slug, name, released, rating, background_image }) => (
+      <Link key={slug} href={`game/${slug}`}>
+        <Preview>
+          {background_image && (
+            <Frame>
+              <Image src={background_image} layout="fill" priority />
+            </Frame>
+          )}
+          <Title>{name}</Title>
+          <div>
+            Released: <Value>{released}</Value>
+          </div>
+          <div>
+            Rating: <Value>{rating}</Value>
+          </div>
+          <Stars rating={rating} />
+        </Preview>
+      </Link>
+    ))}
+  </Grid>
+);
+
+export const List = ({ games }) => (
   <Wrapper>
-    {(games.length && (
-      <Grid>
-        {games.map(({ slug, name, released, rating, background_image }) => (
-          <Link key={slug} href={`game/${slug}`}>
-            <Preview>
-              {background_image && (
-                <Frame>
-                  <Image src={background_image} layout="fill" priority />
-                </Frame>
-              )}
-              <Title>{name}</Title>
-              <div>
-                Released: <Value>{released}</Value>
-              </div>
-              <div>
-                Rating: <Value>{rating}</Value>
-              </div>
-              <Stars rating={rating} />
-            </Preview>
-          </Link>
-        ))}
-      </Grid>
-    )) || <h2>No results</h2>}
+    {(games.length && <Games games={games} />) || <h2>No results</h2>}
   </Wrapper>
 );
